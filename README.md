@@ -1,4 +1,36 @@
-# hw4: Вынесение обр ошибок в отд ф-ю, отображение ошибок на UI
+### hw5: generic типизация пропсов 
+
+```
+type MyComponentProps<T> = {
+  items: T[]
+  defaultItem: T
+}
+function MyComponent<T>(props: MyComponentProps<T>) {
+  console.log(props)
+  return <p>some content</p>
+}
+
+const App = () => {
+  const users: User[] = [
+    { name: 'Bilbo', age: 111 },
+    { name: 'Frodo', age: 33 },
+  ]
+
+  return (
+    <>
+      <MyComponent<string> items={['react', 'typescript']} defaultItem={"9"} />
+      <MyComponent<User> items={users} defaultItem={ {name: 'Sam', age: 40} } />
+    </>
+  )
+}
+
+type User = {
+  name: string
+  age: number
+}
+```
+
+### hw4: Вынесение обр ошибок в отд ф-ю, отображение ошибок на UI
 
 ```
 export const handleError = (e: unknown, dispatch: Dispatch) => {
@@ -19,7 +51,7 @@ type ServerErrorType = {
 }
 ```
 
-# hw3: Обработка ошибок try-catch async-await
+### hw3: Обработка ошибок try-catch async-await
 
 ```
 export const updateDeckTC = (params: UpdateDeckParams) => async (dispatch: Dispatch) => {
@@ -42,10 +74,10 @@ export const updateDeckTC = (params: UpdateDeckParams) => async (dispatch: Dispa
 }
 ```
 
-# hw2: добавлен disabled для кнопок update, delete на время выполн асиних операций
+### hw2: добавлен disabled для кнопок update, delete на время выполн асиних операций
 ( сделано с помощью useState )
 
-# hw1: добавлен loader App для fetchDecksTC()
+### hw1: добавлен loader App для fetchDecksTC()
 
 # Дополнительный урок 02 для спринта 04 (Четверг)
 
