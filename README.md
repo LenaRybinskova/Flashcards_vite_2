@@ -1,3 +1,46 @@
+### 6: skeletons, useLayoutEffect
+
+библиотека react-loading-skeleton
+
+в компоненте DecksList, которая рендерит Decks создаем стейт на loading
+
+```
+export const DecksList = () => {
+    const {decks, isLoading} = useFetchDecks()
+    return (
+        <>
+            {/* вариант с исп скелетона библиотечного*/}
+            {/* {isLoading && decks.length===0 && <Skeleton height={100} count={10} style={{marginBottom: '10px'}}/>}*/}
+
+            {/* вариант с исп скелетона кастомного с частчн исп библиотечного*/}
+            {isLoading && decks.length===0 && <DeckItemSkeleton count={10}/>}
+            <ul className={s.list}>
+                {decks.map((deck) => (
+                    <DeckItem key={deck.id} deck={deck}/>
+                ))}
+            </ul>
+        </>
+    )
+}
+```
+
+```
+export const useFetchDecks = () => {
+  const dispatch = useAppDispatch()
+  const decks = useAppSelector(selectDecks)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // если исп useEffect, то надо тогда иниц стейт isLoading делать true
+  // либо заменить useEffect на useLayoutEffect (он сраб до возврата JSX)
+  useLayoutEffect(() => {
+/*    setIsLoading(true)*/
+    dispatch(fetchDecksTC()).finally(()=>setIsLoading(false))
+  }, [dispatch])
+
+  return {decks,isLoading}
+}s
+```
+
 ### hw5: generic типизация пропсов 
 
 ```

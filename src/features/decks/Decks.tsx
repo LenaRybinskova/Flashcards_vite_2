@@ -6,7 +6,8 @@ export const Decks = () => {
     <div>
       <h1>Decks 🐈</h1>
       <AddNewDeckForm />
-      <DecksList />
+      <DecksList /> {/*эта компон рендерит карточки, поэтому там скелетон нужно располагать*/}
+        <footer>Lorem ipsum dolor sit amet, consectetur adipisicing </footer>
     </div>
   )
 }
