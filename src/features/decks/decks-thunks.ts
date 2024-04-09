@@ -2,7 +2,8 @@ import {Dispatch} from 'redux'
 import {decksAPI, UpdateDeckParams} from './decks-api.ts'
 import {addDeckAC, deleteDeckAC, setDecksAC, updateDeckAC} from './decks-reducer.ts'
 import {setAppStatusAC} from '../../app/app-reducer';
-import axios, {isAxiosError} from 'axios';
+import axios from 'axios';
+import {handleError} from '../../common/utils/handle-error';
 
 export const fetchDecksTC = () => async (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
@@ -33,10 +34,13 @@ export const deleteDeckTC = (id: string) => async (dispatch: Dispatch) => {
 
 export const updateDeckTC = (params: UpdateDeckParams) => async (dispatch: Dispatch) => {
     try {
+        /*        throw new Error("текст синхронной ошибки")*/
         const res = await decksAPI.updateDeck(params)
         dispatch(updateDeckAC(res.data))
     } catch (e) {
-        let errorMessage: string
+        console.log(e)
+        handleError(e, dispatch)
+        /*let errorMessage: string
         // это проверка на принадолежность ошибки объекту ошибки Аксиос, если да - значит что то асинхронное
         if (isAxiosError<ServerErrorType>(e)) {
             //если у объекта ошибки Аксиос есть св-во response - значит какой то ответ сервера есть, если нет response - значит ош на нашей стороне - интернет отвал
@@ -44,12 +48,8 @@ export const updateDeckTC = (params: UpdateDeckParams) => async (dispatch: Dispa
         } else {
             errorMessage = (e as Error).message // простая синхр нативная ошибка, когда вообще до запроса дело не дошло
         }
-        console.log(errorMessage)
+        console.log(errorMessage)*/
     }
 }
 
-type ServerErrorType = {
-    errorMessages: Array<{ field: string, message: string }>
-
-}
 
