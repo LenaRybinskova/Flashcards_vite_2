@@ -1,3 +1,32 @@
+### 7: концепт render-prop
+пропсами передаем и элементы и функ с коллебком, которая знает как именно (исходя из типа) рендерить элемент
+
+```
+type ListType<T> = {
+    item: T[],
+    renderItem: (item: T) => ReactNode
+}
+
+function List<T>(props: ListType<T>) {
+return(<ul>
+    {props.item.map(i => <li>{props.renderItem(i)}</li>)}
+</ul>)
+
+}
+```
+
+```
+export const App = () => {
+    return (
+        <div>
+            <List<string> item={["Lena", "Sasha"]} renderItem={(item)=>item.toUpperCase()}/>
+            <List<number> item={[1, 2]} renderItem={(item)=>item.toFixed()}/>    
+        </div>
+    )
+}
+```
+
+
 ### 6: skeletons, useLayoutEffect
 
 библиотека react-loading-skeleton

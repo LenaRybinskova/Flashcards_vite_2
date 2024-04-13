@@ -11,9 +11,24 @@ export const App = () => {
 
     return (
         <div>
+            <List<string> item={["Lena", "Sasha"]} renderItem={(item)=>item.toUpperCase()}/>
+            <List<number> item={[1, 2]} renderItem={(item)=>item.toFixed()}/>
             {status==='loading' && <LinearLoader/>}
             <Decks/>
             <GlobalError/>
         </div>
     )
+}
+
+
+type ListType<T> = {
+    item: T[],
+    renderItem: (item: T) => ReactNode
+}
+
+function List<T>(props: ListType<T>) {
+    return(<ul>
+        {props.item.map(i => <li>{props.renderItem(i)}</li>)}
+    </ul>)
+
 }
